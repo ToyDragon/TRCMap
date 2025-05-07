@@ -1,7 +1,7 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
-const pages = ["admin"];
+const pages = ["test"];
 
 module.exports = []
 
@@ -35,6 +35,7 @@ for (const page of pages) {
     },
     "plugins": [
         new HtmlWebpackPlugin({ template: `./src/${page}.html`, filename: `${page}.html` })
-    ]
+    ],
+    "devtool": "inline-source-map"
   });
 }
