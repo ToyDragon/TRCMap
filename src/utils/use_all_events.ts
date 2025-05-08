@@ -4,7 +4,6 @@ import { SheetsMetadata } from "./use_sheets_metadata";
 export interface TRCEvent {
     id: number;
     name: string;
-    locationSheet: string;
     lat: number;
     lng: number;
     heading: number;
@@ -25,19 +24,16 @@ export default function useAllEvents(metadata: SheetsMetadata | null, onError: (
             }).then((response) => {
                 const data = JSON.parse(response.body);
                 const events: TRCEvent[] = [];
-                console.log(data);
                 for (let i = 1; i < data.values.length; i++) {
                     const row = data.values[i];
-                    console.log(row);
                     events.push({
                         id: Number(row[0]),
                         name: row[1],
-                        locationSheet: row[2],
-                        lat: Number(row[3]),
-                        lng: Number(row[4]),
-                        heading: Number(row[5]),
-                        zoom: Number(row[6]),
-                        hidden: (row[7] as string).toLowerCase() === "true",
+                        lat: Number(row[2]),
+                        lng: Number(row[3]),
+                        heading: Number(row[4]),
+                        zoom: Number(row[5]),
+                        hidden: (row[6] as string || "").toLowerCase() === "true",
                     });
                 }
                 setAllEvents(events);
