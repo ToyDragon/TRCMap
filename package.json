@@ -7,6 +7,7 @@
     "@types/gapi.client.sheets-v4": "^0.0.4",
     "@types/google.accounts": "^0.0.15",
     "@types/gsi": "^0.0.5",
+    "@vis.gl/react-google-maps": "^1.5.2",
     "express": "^5.1.0",
     "gapi": "^0.0.3",
     "react": "^19.1.0",
