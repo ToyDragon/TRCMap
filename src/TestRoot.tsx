@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import GapiAuth from './utils/gapi_auth';
 import useSheetsMetadata from './utils/use_sheets_metadata';
-import useAllEvents from './utils/use_all_events';
+import useAllEvents, { TRCEvent } from './utils/use_all_events';
 import MapDisplay from './utils/map_display';
 import useAllLocations from './utils/use_all_locations';
+import EventSelector from './utils/event_selector';
 
 
 export default function App() {
@@ -12,13 +13,20 @@ export default function App() {
     const [gapiToken, setGapiToken] = useState<null | GoogleApiOAuth2TokenObject>(null);
     const [sheetMetadata] = useSheetsMetadata(gapiToken !== null, onErrorCB);
     const [allEvents] = useAllEvents(sheetMetadata, onErrorCB);
-    const firstEvent = allEvents && allEvents.length > 0 ? allEvents[0] : null;
-    const [eventLocations] = useAllLocations(sheetMetadata, firstEvent, onErrorCB);
+    const [selectedEvent, setSelectedEvent] = useState<TRCEvent | null>(null);
+    const [eventLocations] = useAllLocations(sheetMetadata, selectedEvent, onErrorCB);
 
 
     return <>
         { errorText }
         { <GapiAuth gapiToken={gapiToken} setGapiToken={setGapiToken} /> }
-        { firstEvent && <MapDisplay trcEvent={firstEvent} locations={eventLocations} /> }
+        { !selectedEvent && allEvents && allEvents.length &&
+            <EventSelector
+                allEvents={allEvents} 
+                makeEventChange={(id: number | null, newData: TRCEvent) => {console.log(id, newData)}}
+                setSelectedEvent={setSelectedEvent}
+            />
+        }
+        { selectedEvent && <MapDisplay trcEvent={selectedEvent} locations={eventLocations} /> }
     </>;
 }
