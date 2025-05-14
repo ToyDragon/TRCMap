@@ -6,4 +6,4 @@ app.use(express.static("docs"))
 
 http
     .createServer(app)
-    .listen(8080, () => { console.log("started at http://trcevents.com:8080/test.html") });
+    .listen(8080, () => { console.log("started at http://trcevents.com:8080/test.html") })
