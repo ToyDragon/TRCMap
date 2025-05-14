@@ -1,14 +1,9 @@
 import express from "express"
-import * as https from "https"
-import * as fs from "fs"
+import * as http from "http"
 
 const app = express()
-
 app.use(express.static("docs"))
 
-const privateKey  = fs.readFileSync('secrets/trcevents.com-key.pem', 'utf8');
-const certificate = fs.readFileSync('secrets/trcevents.com.pem', 'utf8');
-
-https
-    .createServer({key: privateKey, cert: certificate}, app)
-    .listen(8443, () => { console.log("started at https://trcevents.com:8443/test.html") });
+http
+    .createServer(app)
+    .listen(8080, () => { console.log("started at http://trcevents.com:8080/test.html") })
