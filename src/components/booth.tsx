@@ -18,5 +18,8 @@ export default function Booth({location, zoom, center}: {location: TRCLocation, 
         width: location.width/ftPerPixel,
         height: location.width/ftPerPixel,
         boxSizing: "border-box",
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
     }}>{location.label}</div>
 }
